@@ -1,0 +1,136 @@
+<html>
+    <head>
+        <script src="../jquery.1.6.1.min.js"></script>
+        <script src="../jquery.tmpl.beta1.min.js" type="text/javascript"></script>
+        <script src="../jquery.ba-outside-events.1.1.min.js" type="text/javascript"></script>
+        
+        <script src="../jquery.tooltiq.js"></script>
+
+        <link rel="stylesheet" href="css/jquery.tooltiq.css" /> 
+        <style>
+            * { margin: 0; padding: 0; }
+            h1 { display: inline; }
+            body { font-family: Arial; font-size: 65%; margin: 50px 15px; }
+            #examples { margin: 60px auto; width: 80%; font-size: 120%; }
+            #examples p { margin-bottom: 50px; text-align: center; }
+        </style>
+    </head>
+
+    <body>
+        <h1 title="jquery.tooltiq">examples</h1>
+
+        <div id="examples">
+            <p>
+                <a href="#" title="Hey! :)" class="hover-me">Hover me</a>
+            </p>
+            <p>
+                <a href="#" title="Click the tooltip" class="click-me">Click me</a>
+            </p>
+            <p>
+                <img src="img/button.png" width="15" height="15"
+                     title="Move your mouse outside the tooltip"
+                     share_url="www.google.com" class="hover-me-2" />
+            </p>
+            <p>
+                <img src="img/button.png" width="15" height="15"
+                     title="Click outside the tooltip or press ESC"
+                     share_url="www.google.com" class="click-me-2" />
+            <p>
+        </div>
+
+        <script>
+            $(function() {
+                $('h1').tooltiq({
+                    bindShow: function() {},
+                    bindHide: function($tooltip, hide) { $('.close', $tooltip).bind('click.tooltiq.hide', hide); },
+                    unbindHide: function($tooltip) { $('.close', $tooltip).unbind('.tooltiq.hide'); },
+                    templateId: 'tooltiq-w-close-btn-template',
+                    offset: [0, 0]
+                });
+                $('h1').tooltiq('show');
+                
+                //
+
+                $('#examples .hover-me').tooltiq({ // bindShow and bindHide from $.fn.tooltiq.defaults
+                    bindShow: function(delayedShow, cancelDelayedShow) {
+                        var $el = $(this);
+                        $el.bind('mouseover.tooltiq.show', delayedShow);
+                        $el.bind('mouseout.tooltiq.show.cancel', cancelDelayedShow);
+                    },
+                    bindHide: function($tooltip, hide) {
+                        $(this).bind('mouseout.tooltiq.hide', hide);
+                    },
+                    offset: [0, -5]
+                });
+
+                //
+
+                $('#examples .click-me').tooltiq({
+                    delay: 0,
+                    bindShow: function(delayedShow) { $(this).bind('click.tooltiq.show', delayedShow); },
+                    bindHide: function($tooltip, hide) { $tooltip.bind('click.tooltiq.hide', hide); },
+                    offset: [0, -5]
+
+                });
+
+                //
+
+                $('#examples .hover-me-2').tooltiq({
+                    offset: [0, 2],
+                    bindHide: function($tooltip, hide) { $tooltip.bind('mouseoveroutside.tooltiq.hide', hide); }
+                });
+
+                //
+
+                $('#examples .click-me-2').tooltiq({
+                    delay: 0,
+                    offset: [0, 2],
+                    bindShow: function(delayedShow) { $(this).bind('click.tooltiq.show', delayedShow); },
+                    bindHide: function($tooltip, hide) {
+                        $tooltip.bind('clickoutside.tooltiq.hide', hide);
+                        $(document).bind('keyup.tooltiq.hide', function(e) {
+                            if (e.keyCode == 27) {
+                                hide();
+                            }
+                        });
+                    },
+                    unbindHide: function($tooltip) {
+                        $tooltip.unbind('.tooltiq.hide');
+                        $(document).unbind('.tooltiq.hide');
+                    }
+                });
+            });
+        </script>
+
+        <script id="tooltiq-wrapper" type="text/x-jquery-tmpl">
+            <div class="tooltiq">
+                <div class="tooltiq-border tooltiq-bg-n"></div>
+                <div class="tooltiq-corner tooltiq-bg-ne"></div>
+                <div class="tooltiq-border tooltiq-bg-e"></div>
+                <div class="tooltiq-corner tooltiq-bg-se"></div>
+                <div class="tooltiq-border tooltiq-bg-s"></div>
+                <div class="tooltiq-corner tooltiq-bg-sw"></div>
+                <div class="tooltiq-border tooltiq-bg-w"></div>
+                <div class="tooltiq-corner tooltiq-bg-nw"></div>
+                <div class="tooltiq-tip"></div>
+                <div class="tooltiq-content">
+                    {{each $item.html}}
+                        {{html $value}}
+                    {{/each}}
+                </div>
+            </div>
+        </script> 
+        
+        <script id="tooltiq-w-close-btn-template" type="text/x-jquery-tmpl">
+            {{wrap "#tooltiq-wrapper"}}
+                <p>${title} <a href="#" class="close">[x]</a></p>
+            {{/wrap}}
+        </script> 
+
+        <script id="tooltiq-template" type="text/x-jquery-tmpl">
+            {{wrap "#tooltiq-wrapper"}}
+                <p>${title}</p>
+            {{/wrap}}
+        </script> 
+    </body>
+</html>

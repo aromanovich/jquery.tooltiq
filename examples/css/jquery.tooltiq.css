@@ -1,0 +1,88 @@
+.tooltiq {
+    position: absolute;
+    font-size: 120%;
+}
+
+.tooltiq-border {
+    width: auto;
+    height: auto;
+
+    position: absolute;
+}
+
+.tooltiq-corner {
+    width: 11px;
+    height: 11px;
+
+    position: absolute;
+
+    background-image: url('../img/corners.png');
+}
+
+.tooltiq-bg-n {
+    height: 11px;
+    
+    top: 0px;
+    right: 11px;
+    left: 11px;
+
+    background-image: url('../img/v.png');
+    background-position: left top;
+}
+
+.tooltiq-bg-e {
+    width: 11px;
+    
+    top: 11px;
+    right: 0;
+    bottom: 11px;
+
+    background-image: url('../img/h.png');
+    background-position: right top;
+}
+
+.tooltiq-bg-s {
+    height: 11px;
+    
+    right: 11px;
+    bottom: 0;
+    left: 11px;
+
+    background-image: url('../img/v.png');
+    background-position: right bottom;
+}
+
+.tooltiq-bg-w {
+    width: 11px;
+
+    top: 11px;
+    bottom: 11px;
+    left: 0;
+
+    background-image: url('../img/h.png');
+    background-position: left top;
+}
+
+.tooltiq-bg-ne { top: 0; right: 0; background-position: right top; }
+.tooltiq-bg-se { bottom: 0; right: 0; background-position: right bottom; }
+.tooltiq-bg-sw { bottom: 0; left: 0; background-position: left bottom; }
+.tooltiq-bg-nw { top: 0; left: 0; background-position: left top; }
+
+.tooltiq-content {
+    width: auto;
+    height: auto;
+    background: #e1f8ff;
+    margin: 11px;
+}
+
+.tooltiq-tip {
+    width: 12px;
+    height: 13px;
+
+    position: absolute;
+    left: 50%;
+    bottom: -8px;
+    margin-left: -6px;
+
+    background-image: url('../img/tip.png');
+}
